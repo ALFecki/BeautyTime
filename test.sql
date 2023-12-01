@@ -34,6 +34,22 @@ INSERT INTO "schedule"
 VALUES 
     (1, 1, 1, '2023-10-05 10:00:00', 1.5, 'Notes for the appointment'),
     (2, 2, 2, '2023-10-06 15:30:00', 2, NULL);
+INSERT INTO "schedule" 
+    ("client_id", "service_id", "staff_id", "start_date", "duration", "notes")
+VALUES 
+    (1, 1, 1, '2023-10-05 10:00:00', 1.5, 'Notes for the appointment'),
+    (2, 2, 1, '2023-10-06 15:30:00', 2, NULL);
+
+INSERT INTO "schedule" 
+    ("client_id", "service_id", "staff_id", "start_date", "duration", "notes")
+VALUES 
+    (3, 1, 1, '2023-10-05 10:00:00', 1.5, 'Notes for the appointment'),
+    (3, 2, 1, '2023-10-06 15:30:00', 2, NULL);
+
+INSERT INTO "schedule" 
+    ("client_id", "service_id", "staff_id", "start_date", "duration", "notes")
+VALUES 
+    (2, 1, 1, '2023-10-05 10:00:00', 1.5, 'Notes for the appointment');
 
 
 INSERT INTO "admin" 
