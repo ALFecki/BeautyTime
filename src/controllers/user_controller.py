@@ -1,7 +1,7 @@
 
 
 from fastapi import APIRouter, Depends
-from src.services.user_service import UserService
+from services.user_service import UserService
 
 
 router = APIRouter("/user")

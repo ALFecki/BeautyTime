@@ -1,6 +1,5 @@
 from abc import ABC, abstractmethod
-from ast import TypeVar
-from typing import Annotated, Optional, Type
+from typing import Annotated, Optional, Type, TypeVar
 from fastapi import Depends
 from sqlalchemy.ext.asyncio import async_sessionmaker
 from base.base_repository import BaseRepo
