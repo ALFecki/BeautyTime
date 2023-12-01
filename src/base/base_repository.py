@@ -5,9 +5,11 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.sql import text
 
 from base.base_model import BaseEntity
-from src.repositories.base_repository import CreateSchemaType
+from base.base_repository import CreateSchemaType
+from base.base_schema import BaseSchema
 
 ModelType = TypeVar("ModelType", bound=BaseEntity)
+SchemaType = TypeVar("SchemaType", bound=BaseSchema)
 CreateSchemaType = TypeVar("CreateSchemaType", bound=BaseModel)
 
 
@@ -15,6 +17,11 @@ class BaseRepo(ABC):
     @property
     @abstractmethod
     def model(self) -> Type[ModelType]:
+        raise NotImplemented("Абстрактный метод не реализован")
+
+    @property
+    @abstractmethod
+    def schema(self) -> Type[SchemaType]:
         raise NotImplemented("Абстрактный метод не реализован")
 
     @property
