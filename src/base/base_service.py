@@ -28,12 +28,12 @@ class BaseService(ABC):
         session: Optional[AsyncSession] = None,
     ):
         if session:
-            result = await self.get_by_id_without_activity(
+            result = await self.get_by_id(
                 (await self._create(schema_create, session)).id, session
             )
         else:
             async with self.async_session.begin() as new_session:
-                result = await self.get_by_id_without_activity(
+                result = await self.get_by_id(
                     (await self._create(schema_create, new_session)).id,
                     new_session,
                 )
@@ -49,22 +49,29 @@ class BaseService(ABC):
         return result
     
 
-    async def get_by_id_without_activity(
+    async def get_by_id(
         self, id: int, session=None
     ) -> BaseRepo.schema:
-        """
-        Получение данных по id
-        :param id: id записи
-        :param s: внешняя сессия
-        :return:
-        """
         if session:
-            return await self._get_by_id_without_activity(session=session, id=id)
+            return await self._get_by_id(session=session, id=id)
         else:
             async with self.async_session.begin() as session:
-                return await self._get_by_id_without_activity(session=session, id=id)
+                return await self._get_by_id(session=session, id=id)
 
-    async def _get_by_id_without_activity(
+    async def _get_by_id(
         self, id: int, session=None
     ) -> BaseRepo.schema:
         return await self.repository.get_by_id(session=session, id=id)
+    
+
+    async def get_all(
+        self, session=None
+    ) -> BaseRepo.schema:
+        if session:
+            return await self._get_all(session=session)
+        else:
+            async with self.async_session.begin() as session:
+                return await self._get_all(session=session)
+            
+    async def _get_all(self, session=None) -> BaseRepo.schema:
+        return await self.repository.get_all(session=session)
