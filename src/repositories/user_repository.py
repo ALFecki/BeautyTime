@@ -1,8 +1,8 @@
 from typing import Type
 from base.base_repository import BaseRepo
 from models.employers.user_entity import User
-from src.schemas.user.user_schema import UserSchema
-from src.schemas.user.user_create_schema import UserSchemaCreate
+from schemas.user.user_schema import UserSchema
+from schemas.user.user_create_schema import UserSchemaCreate
 
 
 class UserRepository(BaseRepo):
@@ -17,8 +17,5 @@ class UserRepository(BaseRepo):
     
     @property
     def create_schema(self) -> type[UserSchemaCreate]:
-        return UserSchemaCreate
-    
-    
-    
+        return UserSchemaCreate 
 
