@@ -10,4 +10,4 @@ class BaseSchema(BaseModel):
 
     class Config:
         use_enum_values = True
-        orm_mode = True
+        from_attributes = True

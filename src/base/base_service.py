@@ -72,5 +72,6 @@ class BaseService(ABC):
             async with self.async_session.begin() as session:
                 return await self._get_all(session=session)
             
-    async def _get_all(self, session=None) -> BaseRepo.schema:
+    async def _get_all(self, session=None) -> [BaseRepo.schema]:
         return await self.repository.get_all(session=session)
+        
