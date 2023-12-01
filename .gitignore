@@ -1,6 +1,7 @@
 # Compiled class file
 *.class
 .venv/
+.vscode/
 # Log file
 *.log
 
