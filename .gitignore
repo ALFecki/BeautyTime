@@ -2,6 +2,7 @@
 *.class
 .venv/
 .vscode/
+__pycache__/
 # Log file
 *.log
 
