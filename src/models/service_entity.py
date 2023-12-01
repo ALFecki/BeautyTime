@@ -4,6 +4,8 @@ from sqlalchemy.orm import Mapped, mapped_column
 from src.base.base_model import BaseEntity
 
 class Service(BaseEntity):
+    __tablename__ = "service"
+
     name: Mapped[str] = mapped_column(String(30), nullable=False)
     alias: Mapped[str] = mapped_column(String, nullable=False)
     description: Mapped[str] = mapped_column(Text, nullable=False)
