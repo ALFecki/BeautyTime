@@ -1,7 +1,7 @@
 
 from sqlalchemy import String, Text, REAL
 from sqlalchemy.orm import Mapped, mapped_column
-from src.base.base_model import BaseEntity
+from base.base_model import BaseEntity
 
 class Service(BaseEntity):
     __tablename__ = "service"
