@@ -3,6 +3,7 @@ from base.base_repository import BaseRepo
 from models.employers.user_entity import User
 from schemas.user.user_schema import UserSchema
 from schemas.user.user_create_schema import UserSchemaCreate
+from schemas.user.user_update import UserSchemaUpdate
 
 
 class UserRepository(BaseRepo):
@@ -18,4 +19,8 @@ class UserRepository(BaseRepo):
     @property
     def create_schema(self) -> type[UserSchemaCreate]:
         return UserSchemaCreate 
+    
+    @property
+    def update_schema(self) -> type[UserSchemaUpdate]:
+        return UserSchemaUpdate
 
