@@ -1,7 +1,7 @@
 
 import uvicorn
 from fastapi import FastAPI
-from controllers import user_controller
+from controllers import product_controller, user_controller
 
 app = FastAPI(
     root_path="/",
@@ -10,6 +10,7 @@ app = FastAPI(
 )
 
 app.include_router(user_controller.router)
+app.include_router(product_controller.router)
 
 
 if __name__ == "__main__":

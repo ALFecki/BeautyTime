@@ -1,8 +1,10 @@
 from sqlalchemy import REAL, DateTime, Integer, String
 from sqlalchemy.orm import Mapped, mapped_column
-from src.base.base_model import BaseEntity
+from base.base_model import BaseEntity
 
 class Product(BaseEntity):
+    __tablename__ = 'product'
+
     name: Mapped[str] = mapped_column(String, nullable=False)
     alias: Mapped[str] = mapped_column(String, nullable=False)
     quantity: Mapped[int] = mapped_column(Integer, nullable=False)
