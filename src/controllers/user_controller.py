@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, Path
 from services.user_service import UserService
 from schemas.user.user_create_schema import UserSchemaCreate
-from schemas.user.user_update import UserSchemaUpdate
+from schemas.user.user_update_schema import UserSchemaUpdate
 
 
 router = APIRouter(prefix="/api/user", tags=["user"])

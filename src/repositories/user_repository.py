@@ -3,7 +3,7 @@ from base.base_repository import BaseRepo
 from models.employers.user_entity import User
 from schemas.user.user_schema import UserSchema
 from schemas.user.user_create_schema import UserSchemaCreate
-from schemas.user.user_update import UserSchemaUpdate
+from schemas.user.user_update_schema import UserSchemaUpdate
 
 
 class UserRepository(BaseRepo):
