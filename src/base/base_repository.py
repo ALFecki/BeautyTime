@@ -33,12 +33,11 @@ class BaseRepo(ABC):
         statement = text(
             f"""SELECT * FROM public.{self.model.__tablename__} WHERE public.{self.model.__tablename__}.id = {id};"""
         )
-        return (await session.execute(statement)).scalar()
+        return self.schema.from_orm((await session.execute(statement)).fetchone())
 
     async def get_all(self, session: AsyncSession) -> [SchemaType]:
         statement = text(f"SELECT * FROM public.{self.model.__tablename__};")
-        res = (await session.execute(statement)).scalars().all()
-        print(res)
+        res = (await session.execute(statement)).fetchall()
         if res is None:
             raise NotFoundException(
                 404,
