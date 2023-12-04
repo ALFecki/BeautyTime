@@ -1,41 +1,42 @@
+
+from typing import List
 from sqlalchemy import Row, text
-
-from base.base_repository import BaseRepo
-from models.employers.client_entity import Client
-from schemas.client.client_schema import ClientSchema
-from schemas.client.client_schema_create import ClientSchemaCreate
-from schemas.client.client_schema_update import ClientSchemaUpdate
-from schemas.user.user_schema import UserSchema
+from src.base.base_repository import BaseRepo
 from src.base.base_service import AsyncSession
-from utils.not_found_exception import NotFoundException
+from src.models.employers.staff_entity import Staff
+from src.schemas.staff.staff_schema import StaffSchema
+from src.schemas.staff.staff_schema_create import StaffSchemaCreate
+from src.schemas.staff.staff_schema_update import StaffSchemaUpdate
+from src.schemas.user.user_schema import UserSchema
+from src.utils.not_found_exception import NotFoundException
 
 
-class ClientRepository(BaseRepo):
+class StaffRepository(BaseRepo):
     @property
-    def model(self) -> type[Client]:
-        return Client
-
-    @property
-    def schema(self) -> type[ClientSchema]:
-        return ClientSchema
-
-    @property
-    def create_schema(self) -> type[ClientSchemaCreate]:
-        return ClientSchemaCreate
+    def model(self) -> type[Staff]:
+        return Staff
 
     @property
-    def update_schema(self) -> type[ClientSchemaUpdate]:
-        return ClientSchemaUpdate
+    def schema(self) -> type[StaffSchema]:
+        return StaffSchema
 
-    async def create_response(self, row: Row):
+    @property
+    def create_schema(self) -> type[StaffSchemaCreate]:
+        return StaffSchemaCreate
+
+    @property
+    def update_schema(self) -> type[StaffSchemaUpdate]:
+        return StaffSchemaUpdate
+
+    async def create_response(self, row: Row) -> StaffSchema:
         fields_dict = row._asdict()
         user = UserSchema.from_orm(fields_dict)
         return self.schema(user=user, **fields_dict)
 
-    async def get_all(self, session: AsyncSession):
+    async def get_all(self, session: AsyncSession) -> List[StaffSchema]:
         statement = text(
             f"""SELECT * FROM public.{self.model.__tablename__}
-                         JOIN public.user ON client.user_id = public.user.id;"""
+                         JOIN public.user ON {self.model.__tablename__}.user_id = public.user.id;"""
         )
         res = (await session.execute(statement)).fetchall()
         if res is None:
@@ -45,11 +46,12 @@ class ClientRepository(BaseRepo):
                 self.model.__name__ + " with current ID: " + str(id) + " was not found",
             )
         return [await self.create_response(obj) for obj in res]
+    
 
-    async def get_by_id(self, session: AsyncSession, id: int) -> UserSchema:
+    async def get_by_id(self, session: AsyncSession, id: int) -> StaffSchema:
         statement = text(
             f"""SELECT * FROM public.{self.model.__tablename__}
-            JOIN public.user ON client.user_id = public.user.id
+            JOIN public.user ON {self.model.__tablename__}.user_id = public.user.id
             WHERE public.{self.model.__tablename__}.id = {id};"""
         )
         res = (await session.execute(statement)).fetchone()
@@ -60,3 +62,4 @@ class ClientRepository(BaseRepo):
                 self.model.__name__ + " with current ID: " + str(id) + " was not found",
             )
         return await self.create_response(res)
+        
