@@ -1,9 +1,15 @@
 from typing import Type
-from src.base.base_repository import BaseRepo
-from src.models.employers.client_entity import Client
-from src.schemas.client.client_schema import ClientSchema
-from src.schemas.client.client_schema_create import ClientSchemaCreate
-from src.schemas.client.client_schema_update import ClientSchemaUpdate
+from sqlalchemy import Row, text
+
+from sqlalchemy.ext.asyncio import AsyncSession
+from base.base_repository import BaseRepo, SchemaType
+from models.employers.client_entity import Client
+from schemas.client.client_schema import ClientSchema
+from schemas.client.client_schema_create import ClientSchemaCreate
+from schemas.client.client_schema_update import ClientSchemaUpdate
+from schemas.user.user_schema import UserSchema
+from utils.not_found_exception import NotFoundException
+
 
 class ClientRepository(BaseRepo):
     @property
@@ -13,11 +19,47 @@ class ClientRepository(BaseRepo):
     @property
     def schema(self) -> type[ClientSchema]:
         return ClientSchema
-    
+
     @property
     def create_schema(self) -> type[ClientSchemaCreate]:
         return ClientSchemaCreate
-    
+
     @property
     def update_schema(self) -> type[ClientSchemaUpdate]:
         return ClientSchemaUpdate
+
+    async def create_response(self, row: Row):
+        fields_dict = row._asdict()
+        user = UserSchema.from_orm(fields_dict)
+        return self.schema(user=user, **fields_dict)
+
+    async def get_all(self, session: AsyncSession):
+        statement = text(
+            f"""SELECT * FROM public.{self.model.__tablename__}
+                         JOIN public.user ON client.user_id = public.user.id;"""
+        )
+        res = (await session.execute(statement)).fetchall()
+        if res is None:
+            raise NotFoundException(
+                404,
+                "Объект не найден",
+                self.model.__name__ + " with current ID: " + str(id) + " was not found",
+            )
+        return [await self.create_response(obj) for obj in res]
+    
+
+    async def get_by_id(self, session: AsyncSession, id: int) -> UserSchema:
+        statement = text(
+            f"""SELECT * FROM public.{self.model.__tablename__}
+            JOIN public.user ON client.user_id = public.user.id
+            WHERE public.{self.model.__tablename__}.id = {id};"""
+        )
+        res = (await session.execute(statement)).fetchone()
+        if res is None:
+            raise NotFoundException(
+                404,
+                "Объект не найден",
+                self.model.__name__ + " with current ID: " + str(id) + " was not found",
+            )
+        return await self.create_response(res)
+        
