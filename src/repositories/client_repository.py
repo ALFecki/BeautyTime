@@ -6,7 +6,7 @@ from schemas.client.client_schema import ClientSchema
 from schemas.client.client_schema_create import ClientSchemaCreate
 from schemas.client.client_schema_update import ClientSchemaUpdate
 from schemas.user.user_schema import UserSchema
-from src.base.base_service import AsyncSession
+from base.base_service import AsyncSession
 from utils.not_found_exception import NotFoundException
 
 
