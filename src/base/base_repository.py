@@ -35,7 +35,7 @@ class BaseRepo(ABC):
     def update_schema(self) -> Type[UpdateSchemaType]:
         raise NotImplemented("Абстрактный метод не реализован")
 
-    async def get_by_id(self, session: AsyncSession, id: int) -> ModelType:
+    async def get_by_id(self, session: AsyncSession, id: int) -> SchemaType:
         statement = text(
             f"""SELECT * FROM public.{self.model.__tablename__} WHERE public.{self.model.__tablename__}.id = {id};"""
         )

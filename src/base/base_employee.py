@@ -1,8 +1,9 @@
 from sqlalchemy import ForeignKey, String
 from sqlalchemy.orm import Mapped, mapped_column
-from src.base.base_model import BaseEntity
+from base.base_model import BaseEntity
 
 class BaseEmployee(BaseEntity):
+    __abstract__ = True
     user_id: Mapped[int] = mapped_column(ForeignKey("user.id"), nullable=False)
     email: Mapped[str] = mapped_column(String(30), nullable=False, unique=True)
     first_name: Mapped[str] = mapped_column(String(20), nullable=False)
