@@ -1,8 +1,9 @@
 from sqlalchemy import REAL, DateTime, ForeignKey, String, Text
 from sqlalchemy.orm import Mapped, mapped_column
-from src.base.base_model import BaseEntity
+from base.base_model import BaseEntity
 
 class Finance(BaseEntity):
+    __tablename__ = "finance"
     type: Mapped[str] = mapped_column(String, nullable=False)
     sum: Mapped[REAL] = mapped_column(REAL, nullable=False)
     date: Mapped[DateTime] = mapped_column(DateTime(timezone=True), nullable=False)
