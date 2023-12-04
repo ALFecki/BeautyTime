@@ -1,5 +1,5 @@
-from src.base.base_service import BaseService
-from src.repositories.staff_repository import StaffRepository
+from base.base_service import BaseService
+from repositories.staff_repository import StaffRepository
 
 
 class StaffService(BaseService):

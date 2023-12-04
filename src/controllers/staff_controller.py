@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, Path
-from src.services.staff_service import StaffService
-from src.schemas.staff.staff_schema_create import StaffSchemaCreate
-from src.schemas.staff.staff_schema_update import StaffSchemaUpdate
+from services.staff_service import StaffService
+from schemas.staff.staff_schema_create import StaffSchemaCreate
+from schemas.staff.staff_schema_update import StaffSchemaUpdate
 
 
 router = APIRouter(prefix="/staff", tags=["staff"])

@@ -1,5 +1,5 @@
 from typing import Optional
-from src.base.base_schema import BaseSchema
+from base.base_schema import BaseSchema
 
 
 class StaffSchemaUpdate(BaseSchema):    

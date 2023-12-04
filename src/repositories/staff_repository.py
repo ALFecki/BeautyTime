@@ -1,14 +1,14 @@
 
 from typing import List
 from sqlalchemy import Row, text
-from src.base.base_repository import BaseRepo
-from src.base.base_service import AsyncSession
-from src.models.employers.staff_entity import Staff
-from src.schemas.staff.staff_schema import StaffSchema
-from src.schemas.staff.staff_schema_create import StaffSchemaCreate
-from src.schemas.staff.staff_schema_update import StaffSchemaUpdate
-from src.schemas.user.user_schema import UserSchema
-from src.utils.not_found_exception import NotFoundException
+from base.base_repository import BaseRepo
+from base.base_service import AsyncSession
+from models.employers.staff_entity import Staff
+from schemas.staff.staff_schema import StaffSchema
+from schemas.staff.staff_schema_create import StaffSchemaCreate
+from schemas.staff.staff_schema_update import StaffSchemaUpdate
+from schemas.user.user_schema import UserSchema
+from utils.not_found_exception import NotFoundException
 
 
 class StaffRepository(BaseRepo):
