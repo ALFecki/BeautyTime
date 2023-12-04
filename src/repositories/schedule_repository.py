@@ -92,4 +92,4 @@ class ScheduleRepository(BaseRepo):
                 "Объект не найден",
                 self.model.__name__ + " with current ID: " + str(id) + " was not found",
             )
-        return await self.create_response(res)
+        return await self.create_response(res, session)
