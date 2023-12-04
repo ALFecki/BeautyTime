@@ -7,7 +7,8 @@ from controllers import (
     sale_controller,
     staff_controller,
     client_controller,
-    supply_controller
+    supply_controller,
+    schedule_controller,
 )
 
 app = FastAPI(
@@ -23,6 +24,7 @@ app.include_router(product_controller.router)
 app.include_router(service_controller.router)
 app.include_router(sale_controller.router)
 app.include_router(supply_controller.router)
+app.include_router(schedule_controller.router)
 
 if __name__ == "__main__":
     uvicorn.run(app, loop="auto")

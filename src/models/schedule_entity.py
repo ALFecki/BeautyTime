@@ -1,6 +1,6 @@
 from sqlalchemy import REAL, DateTime, ForeignKey, Text
 from sqlalchemy.orm import Mapped, mapped_column
-from src.base.base_model import BaseEntity
+from base.base_model import BaseEntity
 
 class Schedule(BaseEntity):
     __tablename__ = "schedule"
