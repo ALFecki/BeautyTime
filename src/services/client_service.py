@@ -8,6 +8,7 @@ from schemas.user.user_schema import UserSchema
 from services.user_service import UserService
 from services.admin_service import AdminService
 from services.staff_service import StaffService
+from schemas.client.client_schema_create_with_user import ClientSchemaCreateWithUser
 
 
 class ClientService(BaseService):
@@ -40,6 +41,25 @@ class ClientService(BaseService):
     ) -> Coroutine[Any, Any, Any]:
         await self.check_roles(account.id)
         return await super().get_by_id(id, session, account)
+
+    async def create_with_user(
+        self,
+        schema_create: ClientSchemaCreateWithUser,
+        session: Optional[AsyncSession] = None,
+        account: Optional[UserSchema] = None,
+    ):
+        if session:
+            await self._create_with_user(schema_create, session)
+        else:
+            async with self.async_session.begin() as new_session:
+                await self._create_with_user(schema_create, new_session)
+
+    async def _create_with_user(
+        self,
+        schema_create: ClientSchemaCreateWithUser,
+        session: Optional[AsyncSession],
+    ):
+        await self.repository.create_with_user(session, schema_create)
 
     async def update(
         self,

@@ -5,6 +5,7 @@ from schemas.client.client_schema_create import ClientSchemaCreate
 from auth.middleware import oauth2_scheme
 from services.auth_service import AuthService
 from schemas.user.user_schema import UserSchema
+from schemas.client.client_schema_create_with_user import ClientSchemaCreateWithUser
 
 router = APIRouter(prefix="/api/client", tags=["client"])
 
@@ -29,10 +30,17 @@ async def get_client_by_id(
 @router.post("/")
 async def create_client(
     create_schema: ClientSchemaCreate,
-    account: UserSchema = Depends(AuthService.get_current_user),
     service=Depends(ClientService),
 ):
-    return await service.create(create_schema, account=account)
+    return await service.create(create_schema)
+
+
+@router.post("/user")
+async def create_client_with_user(
+    create_schema: ClientSchemaCreateWithUser,
+    service=Depends(ClientService),
+):
+    return await service.create_with_user(create_schema)
 
 
 @router.patch("/{id}")

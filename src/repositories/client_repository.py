@@ -1,4 +1,5 @@
 from sqlalchemy import Row, text
+from sqlalchemy.ext.asyncio import AsyncSession
 
 from base.base_repository import BaseRepo
 from models.employers.client_entity import Client
@@ -8,6 +9,7 @@ from schemas.client.client_schema_update import ClientSchemaUpdate
 from schemas.user.user_schema import UserSchema
 from base.base_service import AsyncSession
 from utils.not_found_exception import NotFoundException
+from schemas.client.client_schema_create_with_user import ClientSchemaCreateWithUser
 
 
 class ClientRepository(BaseRepo):
@@ -26,6 +28,22 @@ class ClientRepository(BaseRepo):
     @property
     def update_schema(self) -> type[ClientSchemaUpdate]:
         return ClientSchemaUpdate
+
+    async def create_with_user(
+        self, session: AsyncSession, schema_create: ClientSchemaCreateWithUser
+    ):
+        statement = text(
+            f"""CALL public.add_client(
+                '{schema_create.login}',
+                '{schema_create.password}',
+                '{schema_create.email}',
+                '{schema_create.first_name}',
+                '{schema_create.second_name}',
+                '{schema_create.surname}',
+                '{schema_create.phone}'
+                );"""
+        )
+        await session.execute(statement)
 
     async def create_response(self, row: Row):
         fields_dict = row._asdict()
@@ -60,9 +78,7 @@ class ClientRepository(BaseRepo):
                 "Объект не найден",
                 self.model.__name__ + " with current ID: " + str(id) + " was not found",
             )
-        return await self.create_response(res)    
+        return await self.create_response(res)
 
     async def check_client_role(self, session: AsyncSession, user_id: int):
         return await self.get_by_user_id(session, user_id) is not None
-        
-
