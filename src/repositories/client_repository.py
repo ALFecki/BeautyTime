@@ -30,6 +30,7 @@ class ClientRepository(BaseRepo):
     async def create_response(self, row: Row):
         fields_dict = row._asdict()
         user = UserSchema.from_orm(fields_dict)
+        user.id = fields_dict["user_id"]
         return self.schema(user=user, **fields_dict)
 
     async def get_all(self, session: AsyncSession):

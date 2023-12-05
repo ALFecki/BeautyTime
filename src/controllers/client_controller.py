@@ -11,18 +11,19 @@ router = APIRouter(prefix="/api/client", tags=["client"])
 
 @router.get("/")
 async def get_all_clients(
-    service=Depends(ClientService),
     account: UserSchema = Depends(AuthService.get_current_user),
+    service=Depends(ClientService),
 ):
-    return await service.get_all()
+    return await service.get_all(account=account)
 
 
 @router.get("/{id}")
 async def get_client_by_id(
     id: int = Path(example=1, description="ID искомого клиента"),
+    account: UserSchema = Depends(AuthService.get_current_user),
     service=Depends(ClientService),
 ):
-    return await service.get_by_id(id)
+    return await service.get_by_id(id, account=account)
 
 
 @router.post("/")
@@ -36,14 +37,16 @@ async def create_client(
 async def update_client(
     update_schema: ClientSchemaUpdate,
     id: int = Path(example=1, description="ID обновляемого клиента"),
+    account: UserSchema = Depends(AuthService.get_current_user),
     service=Depends(ClientService),
 ):
-    return await service.update(id, update_schema)
+    return await service.update(id, update_schema, account=account)
 
 
 @router.delete("/{id}")
 async def delete_client(
     id: int = Path(example=1, description="ID удаляемого клиента"),
+    account: UserSchema = Depends(AuthService.get_current_user),
     service=Depends(ClientService),
 ):
-    return await service.delete(id)
+    return await service.delete(id, account=account)
