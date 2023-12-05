@@ -3,11 +3,17 @@ from schemas.client.client_schema_update import ClientSchemaUpdate
 from services.client_service import ClientService
 from schemas.client.client_schema_create import ClientSchemaCreate
 from auth.middleware import oauth2_scheme
+from services.auth_service import AuthService
+from schemas.user.user_schema import UserSchema
 
 router = APIRouter(prefix="/api/client", tags=["client"])
 
+
 @router.get("/")
-async def get_all_clients(service=Depends(ClientService), token: str = Depends(oauth2_scheme)):
+async def get_all_clients(
+    service=Depends(ClientService),
+    account: UserSchema = Depends(AuthService.get_current_user),
+):
     return await service.get_all()
 
 
