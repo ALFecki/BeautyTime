@@ -5,4 +5,4 @@ from repositories.review_repository import ReviewRepository
 class ReviewService(BaseService):
     @property
     def repository(self) -> type[ReviewRepository]:
-        return ReviewRepository
+        return ReviewRepository()
