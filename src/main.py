@@ -12,6 +12,7 @@ from controllers import (
     finance_controller,
     review_controller,
     auth_controller,
+    admin_controller
 )
 from controllers import log_controller
 
@@ -24,6 +25,7 @@ app = FastAPI(
 app.include_router(user_controller.router)
 app.include_router(client_controller.router)
 app.include_router(staff_controller.router)
+app.include_router(admin_controller.router)
 app.include_router(product_controller.router)
 app.include_router(service_controller.router)
 app.include_router(sale_controller.router)
