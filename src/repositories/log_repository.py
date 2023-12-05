@@ -1,12 +1,12 @@
 from sqlalchemy import Row, text
-from src.base.base_repository import BaseRepo
-from src.base.base_service import AsyncSession
-from src.models.log_entity import Log
-from src.repositories.client_repository import ClientRepository
-from src.schemas.log.log_schema import LogSchema
-from src.schemas.log.log_schema_create import LogSchemaCreate
-from src.schemas.log.log_schema_update import LogSchemaUpdate
-from src.utils.not_found_exception import NotFoundException
+from base.base_repository import BaseRepo
+from base.base_service import AsyncSession
+from models.log_entity import Log
+from repositories.client_repository import ClientRepository
+from schemas.log.log_schema import LogSchema
+from schemas.log.log_schema_create import LogSchemaCreate
+from schemas.log.log_schema_update import LogSchemaUpdate
+from utils.not_found_exception import NotFoundException
 
 
 class LogRepository(BaseRepo):

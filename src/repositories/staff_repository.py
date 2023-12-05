@@ -1,4 +1,3 @@
-
 from typing import List
 from sqlalchemy import Row, text
 from base.base_repository import BaseRepo
@@ -46,7 +45,6 @@ class StaffRepository(BaseRepo):
                 self.model.__name__ + " with current ID: " + str(id) + " was not found",
             )
         return [await self.create_response(obj) for obj in res]
-    
 
     async def get_by_id(self, session: AsyncSession, id: int) -> StaffSchema:
         statement = text(
@@ -62,4 +60,6 @@ class StaffRepository(BaseRepo):
                 self.model.__name__ + " with current ID: " + str(id) + " was not found",
             )
         return await self.create_response(res)
-        
+
+    async def check_staff_role(self, session: AsyncSession, user_id: int):
+        return await self.get_by_user_id(session, user_id) is not None

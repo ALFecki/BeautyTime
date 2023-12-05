@@ -1,7 +1,7 @@
 from datetime import datetime
 from typing import Optional
-from src.base.base_schema import BaseSchema
-from src.schemas.client.client_schema import ClientSchema
+from base.base_schema import BaseSchema
+from schemas.client.client_schema import ClientSchema
 
 class LogSchema(BaseSchema):
     date: datetime

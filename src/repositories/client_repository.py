@@ -49,7 +49,7 @@ class ClientRepository(BaseRepo):
     async def get_by_id(self, session: AsyncSession, id: int) -> UserSchema:
         statement = text(
             f"""SELECT * FROM public.{self.model.__tablename__}
-            JOIN public.user ON client.user_id = public.user.id
+            JOIN public.user ON {self.model.__tablename__}.user_id = public.user.id
             WHERE public.{self.model.__tablename__}.id = {id};"""
         )
         res = (await session.execute(statement)).fetchone()
@@ -59,4 +59,9 @@ class ClientRepository(BaseRepo):
                 "Объект не найден",
                 self.model.__name__ + " with current ID: " + str(id) + " was not found",
             )
-        return await self.create_response(res)
+        return await self.create_response(res)    
+
+    async def check_client_role(self, session: AsyncSession, user_id: int):
+        return await self.get_by_user_id(session, user_id) is not None
+        
+

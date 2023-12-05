@@ -4,7 +4,7 @@ from schemas.staff.staff_schema_create import StaffSchemaCreate
 from schemas.staff.staff_schema_update import StaffSchemaUpdate
 
 
-router = APIRouter(prefix="/staff", tags=["staff"])
+router = APIRouter(prefix="/api/staff", tags=["staff"])
 
 
 @router.get("/")

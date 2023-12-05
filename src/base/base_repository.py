@@ -71,6 +71,15 @@ class BaseRepo(ABC):
         )
         await session.execute(statement)
         return await self.get_by_id(session, id)
+    
+
+    async def get_by_user_id(self, session: AsyncSession, user_id: int):
+        statement = text(
+            f"""SELECT * FROM public.{self.model.__tablename__}
+            JOIN public.user ON {self.model.__tablename__}.user_id = public.user.id
+            WHERE public.{self.model.__tablename__}.user_id = {user_id};"""
+        )
+        return (await session.execute(statement)).fetchone()
 
     async def delete(self, session: AsyncSession, id: int):
         statement = text(

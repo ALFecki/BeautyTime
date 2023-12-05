@@ -1,8 +1,8 @@
 from fastapi import APIRouter, Depends, Path
-from src.schemas.log.log_schema_update import LogSchemaUpdate
+from schemas.log.log_schema_update import LogSchemaUpdate
 
-from src.services.log_service import LogService
-from src.schemas.log.log_schema_create import LogSchemaCreate
+from services.log_service import LogService
+from schemas.log.log_schema_create import LogSchemaCreate
 
 
 router = APIRouter(prefix="/api/log", tags=["log"])

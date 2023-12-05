@@ -2,11 +2,12 @@ from fastapi import APIRouter, Depends, Path
 from schemas.client.client_schema_update import ClientSchemaUpdate
 from services.client_service import ClientService
 from schemas.client.client_schema_create import ClientSchemaCreate
+from auth.middleware import oauth2_scheme
 
-router = APIRouter(prefix="/client", tags=["client"])
+router = APIRouter(prefix="/api/client", tags=["client"])
 
 @router.get("/")
-async def get_all_clients(service=Depends(ClientService)):
+async def get_all_clients(service=Depends(ClientService), token: str = Depends(oauth2_scheme)):
     return await service.get_all()
 
 
