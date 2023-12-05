@@ -15,18 +15,21 @@ class ClientService(BaseService):
     def repository(self) -> type[ClientRepository]:
         return ClientRepository()
 
-    async def get_all(
-        self, session: AsyncSession | None = None, account: UserSchema | None = None
-    ) -> Coroutine[Any, Any, Any]:
+    async def check_roles(self, user_id: int):
         admin_service = AdminService(self.async_session)
         staff_service = StaffService(self.async_session)
         if not await admin_service.check_admin_role(
-            account.id
-        ) and not await staff_service.check_staff_role(account.id):
+            user_id
+        ) and not await staff_service.check_staff_role(user_id):
             raise HTTPException(
                 status_code=status.HTTP_401_UNAUTHORIZED,
                 detail="Lack of access",
             )
+
+    async def get_all(
+        self, session: AsyncSession | None = None, account: UserSchema | None = None
+    ) -> Coroutine[Any, Any, Any]:
+        await self.check_roles(account.id)
         return await super().get_all(session, account)
 
     async def get_by_id(
@@ -35,15 +38,7 @@ class ClientService(BaseService):
         session: AsyncSession | None = None,
         account: UserSchema | None = None,
     ) -> Coroutine[Any, Any, Any]:
-        admin_service = AdminService(self.async_session)
-        staff_service = StaffService(self.async_session)
-        if not await admin_service.check_admin_role(
-            account.id
-        ) and not await staff_service.check_staff_role(account.id):
-            raise HTTPException(
-                status_code=status.HTTP_401_UNAUTHORIZED,
-                detail="Lack of access",
-            )
+        await self.check_roles(account.id)
         return await super().get_by_id(id, session, account)
 
     async def update(
@@ -53,13 +48,8 @@ class ClientService(BaseService):
         session: AsyncSession | None = None,
         account: UserSchema | None = None,
     ):
-        admin_service = AdminService(self.async_session)
-        staff_service = StaffService(self.async_session)
-        if (
-            not await admin_service.check_admin_role(account.id)
-            and not await staff_service.check_staff_role(account.id)
-            and not await self.check_client_role(account.id)
-        ):
+        await self.check_roles(account.id)
+        if not await self.check_client_role(account.id):
             raise HTTPException(
                 status_code=status.HTTP_401_UNAUTHORIZED,
                 detail="Lack of access",
@@ -72,15 +62,7 @@ class ClientService(BaseService):
         session: AsyncSession | None = None,
         account: UserSchema | None = None,
     ):
-        admin_service = AdminService(self.async_session)
-        staff_service = StaffService(self.async_session)
-        if not await admin_service.check_admin_role(
-            account.id
-        ) and not await staff_service.check_staff_role(account.id):
-            raise HTTPException(
-                status_code=status.HTTP_401_UNAUTHORIZED,
-                detail="Lack of access",
-            )
+        await self.check_roles(account.id)
         return await super().delete(id, session, account)
 
     async def check_client_role(
