@@ -1,0 +1,10 @@
+from datetime import datetime
+from typing import Optional
+from src.base.base_schema import BaseSchema
+from src.schemas.client.client_schema import ClientSchema
+
+class LogSchema(BaseSchema):
+    date: datetime
+    client_id: int
+    info: Optional[str]
+    client: ClientSchema
