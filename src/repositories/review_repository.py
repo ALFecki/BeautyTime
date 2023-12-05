@@ -1,13 +1,13 @@
 from sqlalchemy import Row, text
-from src.base.base_repository import BaseRepo
-from src.base.base_service import AsyncSession
-from src.models.review_entity import Review
-from src.repositories.schedule_repository import ScheduleRepository
-from src.schemas.reviews.review_schema import ReviewSchema
-from src.schemas.reviews.review_schema_create import ReviewSchemaCreate
-from src.schemas.reviews.review_schema_update import ReviewSchemaUpdate
-from src.repositories.client_repository import ClientRepository
-from src.utils.not_found_exception import NotFoundException
+from base.base_repository import BaseRepo
+from base.base_service import AsyncSession
+from models.review_entity import Review
+from repositories.schedule_repository import ScheduleRepository
+from schemas.reviews.review_schema import ReviewSchema
+from schemas.reviews.review_schema_create import ReviewSchemaCreate
+from schemas.reviews.review_schema_update import ReviewSchemaUpdate
+from repositories.client_repository import ClientRepository
+from utils.not_found_exception import NotFoundException
 
 
 class ReviewRepository(BaseRepo):
