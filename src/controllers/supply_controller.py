@@ -14,7 +14,7 @@ async def get_all_supplies(
     account: UserSchema = Depends(AuthService.get_current_user),
     service=Depends(SupplyService),
 ):
-    return await service.get_all()
+    return await service.get_all(account=account)
 
 
 @router.get("/{id}")
@@ -23,7 +23,7 @@ async def get_service_by_id(
     account: UserSchema = Depends(AuthService.get_current_user),
     service=Depends(SupplyService),
 ):
-    return await service.get_by_id(id)
+    return await service.get_by_id(id, account=account)
 
 
 @router.post("/")
@@ -32,7 +32,7 @@ async def create_service(
     account: UserSchema = Depends(AuthService.get_current_user),
     service=Depends(SupplyService),
 ):
-    return await service.create(create_schema)
+    return await service.create(create_schema, account=account)
 
 
 @router.patch("/{id}")
@@ -42,7 +42,7 @@ async def update_service(
     account: UserSchema = Depends(AuthService.get_current_user),
     service=Depends(SupplyService),
 ):
-    return await service.update(id, update_schema)
+    return await service.update(id, update_schema, account=account)
 
 
 @router.delete("/{id}")
@@ -51,4 +51,4 @@ async def delete_service(
     account: UserSchema = Depends(AuthService.get_current_user),
     service=Depends(SupplyService),
 ):
-    return await service.delete(id)
+    return await service.delete(id, account=account)

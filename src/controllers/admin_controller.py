@@ -11,22 +11,27 @@ router = APIRouter(prefix="/api/admin", tags=["admin"])
 
 @router.get("/")
 async def get_all_admins(
-    service=Depends(AdminService),
     account: UserSchema = Depends(AuthService.get_current_user),
+    service=Depends(AdminService),
 ):
-    return await service.get_all()
+    return await service.get_all(account=account)
 
 
 @router.get("/{id}")
 async def get_admin_by_id(
     id: int = Path(example=1, description="ID искомого админа"),
+    account: UserSchema = Depends(AuthService.get_current_user),
     service=Depends(AdminService),
 ):
-    return await service.get_by_id(id)
+    return await service.get_by_id(id, account=account)
 
 
 @router.post("/")
-async def create_admin(create_schema: AdminSchemaCreate, service=Depends(AdminService)):
+async def create_admin(
+    create_schema: AdminSchemaCreate,
+    account: UserSchema = Depends(AuthService.get_current_user),
+    service=Depends(AdminService),
+):
     return await service.create(create_schema)
 
 
@@ -34,14 +39,16 @@ async def create_admin(create_schema: AdminSchemaCreate, service=Depends(AdminSe
 async def update_admin(
     update_schema: AdminSchemaUpdate,
     id: int = Path(example=1, description="ID обновляемого админа"),
+    account: UserSchema = Depends(AuthService.get_current_user),
     service=Depends(AdminService),
 ):
-    return await service.update(id, update_schema)
+    return await service.update(id, update_schema, account=account)
 
 
 @router.delete("/{id}")
 async def delete_admin(
     id: int = Path(example=1, description="ID удаляемого админа"),
+    account: UserSchema = Depends(AuthService.get_current_user),
     service=Depends(AdminService),
 ):
-    return await service.delete(id)
+    return await service.delete(id, account=account)

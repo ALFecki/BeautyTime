@@ -30,7 +30,7 @@ async def create_review(
     account: UserSchema = Depends(AuthService.get_current_user),
     service=Depends(ReviewService),
 ):
-    return await service.create(create_schema)
+    return await service.create(create_schema, account=account)
 
 
 @router.patch("/{id}")
@@ -40,7 +40,7 @@ async def update_review(
     account: UserSchema = Depends(AuthService.get_current_user),
     service=Depends(ReviewService),
 ):
-    return await service.update(id, update_schema)
+    return await service.update(id, update_schema, account=account)
 
 
 @router.delete("/{id}")
@@ -49,4 +49,4 @@ async def delete_review(
     account: UserSchema = Depends(AuthService.get_current_user),
     service=Depends(ReviewService),
 ):
-    return await service.delete(id)
+    return await service.delete(id, account=account)
