@@ -1,10 +1,10 @@
 from fastapi import HTTPException, status
 from base.base_service import AsyncSession, BaseService
 from repositories.service_repository import ServiceRepository
-from src.base.base_repository import BaseRepo
-from src.schemas.user.user_schema import UserSchema
-from src.services.admin_service import AdminService
-from src.services.staff_service import StaffService
+from base.base_repository import BaseRepo
+from schemas.user.user_schema import UserSchema
+from services.admin_service import AdminService
+from services.staff_service import StaffService
 
 
 class ServiceService(BaseService):

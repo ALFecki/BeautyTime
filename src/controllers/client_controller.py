@@ -28,9 +28,11 @@ async def get_client_by_id(
 
 @router.post("/")
 async def create_client(
-    create_schema: ClientSchemaCreate, service=Depends(ClientService)
+    create_schema: ClientSchemaCreate,
+    account: UserSchema = Depends(AuthService.get_current_user),
+    service=Depends(ClientService),
 ):
-    return await service.create(create_schema)
+    return await service.create(create_schema, account=account)
 
 
 @router.patch("/{id}")

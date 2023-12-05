@@ -3,12 +3,12 @@ from typing import Type
 from fastapi import HTTPException, status
 from base.base_service import AsyncSession, BaseService
 from repositories.review_repository import ReviewRepository
-from src.base.base_repository import BaseRepo
-from src.schemas.user.user_schema import UserSchema
-from src.services.admin_service import AdminService
-from src.services.staff_service import StaffService
-from src.models.employers.client_entity import Client
-from src.services.client_service import ClientService
+from base.base_repository import BaseRepo
+from schemas.user.user_schema import UserSchema
+from services.admin_service import AdminService
+from services.staff_service import StaffService
+from models.employers.client_entity import Client
+from services.client_service import ClientService
 
 
 class ReviewService(BaseService):

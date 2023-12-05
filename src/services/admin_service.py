@@ -5,7 +5,7 @@ from schemas.admin.admin_schema_create import AdminSchemaCreate
 from base.base_service import AsyncSession, BaseService
 from repositories.admin_repository import AdminRepository
 from schemas.user.user_schema import UserSchema
-from src.base.base_repository import BaseRepo
+from base.base_repository import BaseRepo
 
 
 class AdminService(BaseService):

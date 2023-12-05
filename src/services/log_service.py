@@ -3,7 +3,7 @@ from base.base_service import AsyncSession, BaseService
 from repositories.log_repository import LogRepository
 from schemas.user.user_schema import UserSchema
 from services.admin_service import AdminService
-from src.base.base_repository import BaseRepo
+from base.base_repository import BaseRepo
 
 
 class LogService(BaseService):
